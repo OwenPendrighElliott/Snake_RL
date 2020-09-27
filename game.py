@@ -21,7 +21,7 @@ class Snake():
         self.axim1 = ax1.imshow(self.board*100)
         self.draw()
 
-        self.invalid = -5
+        self.invalid = -3
         self.loss = -10
         self.score = 10
         self.normal = -1
@@ -43,7 +43,7 @@ class Snake():
         self.board[x][y] = 2
 
     def spawn_apple(self):
-        apple = (random.randint(0, self.w-1), random.randint(0, self.h-1))
+        apple = (random.randint(0, self.h-1), random.randint(0, self.w-1))
         if apple in self.snake_locs:
             return self.spawn_apple()
         else:
@@ -189,12 +189,12 @@ class Snake():
     def manhatten_to_apple(self):
         x1, y1 = self.snake_locs[0]
         x2, y2 = self.apple
-        return math.abs(x1-x2) + math.abs(y1-y2)
+        return abs(x1-x2) + abs(y1-y2)
 
     def euclid_to_apple(self):
         x1, y1 = self.snake_locs[0]
         x2, y2 = self.apple
-        return math.sqrt(((x1 - x2)*(y1 - y2)))
+        return math.sqrt(((x1 - x2)**2+(y1 - y2)**2))
 
     def draw(self):
         if self.live_draw:
@@ -202,6 +202,7 @@ class Snake():
             self.fig1.canvas.flush_events()
     
     def set_state(self, snk_locs, apl_loc):
+        self.board.fill(0)
         for x, y in snk_locs:
             self.board[x][y] = 1 
         
