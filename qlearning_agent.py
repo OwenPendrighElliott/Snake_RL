@@ -1,6 +1,7 @@
 import random
 import time
 import q_agent
+from tqdm import tqdm
 
 class QLearningAgent(q_agent.QAgent):
     def __init__(self, game, default_value=0.5, alpha=0.5, alpha_decay=0.98, gamma=0.98, epsilon=0.9, epsilon_decay=0.99, decay_start=0, watch_train=False, watch_run=True, wait=0.1):
@@ -13,14 +14,14 @@ class QLearningAgent(q_agent.QAgent):
         if self.decay_start > iterations:
             raise ValueError("decay_start value is set for after training finishes")
 
-        for i in range(iterations):
+        for i in tqdm(range(iterations)):
             
             state = self.game.get_state()
             act = self.get_epsilon_max(state, e)
 
             reward = self.game.step(act)
             if reward < self.game.normal:
-                reward = reward*self.game.euclid_to_apple()
+                reward = reward*self.game.manhatten_to_apple()*0.1
 
             nxt_state = self.game.get_state()
             nxt_act = self.get_max_act(nxt_state)

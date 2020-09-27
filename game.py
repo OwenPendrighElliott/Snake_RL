@@ -54,7 +54,6 @@ class Snake():
 
     def step(self, action):
         if action not in self.actions or not self.is_applicable(action):
-            # print("I can't do that dave")
             return self.invalid
 
         if action == "up":
@@ -69,12 +68,10 @@ class Snake():
         self.board.fill(0)
         for x, y in self.snake_locs:
             if not 0 <= x <= self.h-1:
-                # print("Game over!")
                 self.reset() 
                 self.draw()
                 return self.loss
             if not 0 <= y <= self.w-1:
-                # print("Game over!")
                 self.reset()
                 self.draw()
                 return self.loss
@@ -82,7 +79,6 @@ class Snake():
             self.board[x][y] = 1 
 
             if self.snake_locs.count((x, y)) > 1:
-                # print("Game over!")
                 self.reset() 
                 self.draw()
                 return self.loss
@@ -94,7 +90,6 @@ class Snake():
 
         self.try_eat()
 
-        # if self.live_draw:
         self.draw()
         
         if prv-self.score != 0:
